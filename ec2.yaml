@@ -2,6 +2,7 @@
 - name: Provisioning a new EC2 instance and security group
   hosts: localhost
   connection: local
+  become_user: root
   gather_facts: False
   tags: provisioning
 
@@ -15,23 +16,23 @@
         msg: "Using Python {{ ansible_python_version }}"
               
     - name: Install dependencies
-      shell: "/usr/bin/python3.10 -m pip install {{ item }}"
+      shell: "/usr/bin/python3.12.3 -m pip install {{ item }}"
       loop:
        - boto3
        - botocore
 
   vars:
-    ansible_python_interpreter: /usr/bin/python3.10
-    keypair: Mumbai
+    ansible_python_interpreter: /usr/bin/python3.12.3
+    keypair: harish
     instance_type: t2.micro
-    image_id: ami-0f5ee92e2d63afc18
+    image_id: ami-04b70fa74e45c3917
     wait: yes
     group: webserver
     count: 1
-    region: ap-south-1
+    region: us-east-1
     security_group: ec2-security-group
     tag_name:
-      Name: Aj-ec2   
+      Name: Avi-ec2   
 
   tasks:
     - name: Create a security group
@@ -84,5 +85,5 @@
           sudo apt install docker.io -y
           sudo systemctl start docker
           sudo systemctl enable docker
-          sudo docker run -d --name 2048 -p 3000:3000 sevenajay/2048:latest
+          sudo docker run -d --name 2048 -p 3000:3000 avinashbudhya/2048:latest
       register: ec2
