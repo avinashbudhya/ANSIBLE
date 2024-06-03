@@ -2,7 +2,6 @@
 - name: Provisioning a new EC2 instance and security group
   hosts: localhost
   connection: local
-  become_user: root
   gather_facts: False
   tags: provisioning
 
